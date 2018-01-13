@@ -1,0 +1,6 @@
+cost = 0.5 Σ(error)^2 = 0.0089
+average cost = 0.0089/50 = 0.000178
+average error = 0.0189
+
+y0 = (log10(stress) / 2 - 2) / 2.5;
+stress = 10^(5y + 4)
