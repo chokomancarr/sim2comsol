@@ -10,8 +10,8 @@ Node::Node(Layer* p, bool usesig) : usesig(usesig) {
 	parents = std::vector<Node*>(p->nodes);
 	size = parents.size();
 	weights.resize(size);
-	for (uint a = 0; a < size; a++) weights[a] = (rand() % 100)*0.01f - 0.5;
-	bias = (rand() % 100)*0.01 - 0.5;
+	for (uint a = 0; a < size; a++) weights[a] = Net::me->distri(Net::me->device);
+	bias = Net::me->distri(Net::me->device);
 }
 
 void Node::Calc() {
@@ -95,7 +95,14 @@ void Layer::BP(const double _a) {
 }
 
 
-Net::Net(uint ls, uint* ns): me(this), size(ls) {
+Net* Net::me = nullptr;
+
+Net::Net(uint ls, uint* ns) : size(ls) {
+	me = this;
+	distri = std::normal_distribution<double>(0, 0.0001);
+	std::random_device rd{};
+	device = std::mt19937(rd());
+
 	layers.resize(ls);
 	layers[0] = new Layer(ns[0]);
 	for (uint a = 1; a < size; a++) {

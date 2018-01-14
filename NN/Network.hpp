@@ -2,16 +2,17 @@
 
 #include <vector>
 #include <math.h>
+#include <random>
 
 inline double sigmoid(const double& value) {
-	//return 1.0f / (1 + exp(-value));
-	return value;
+	return 1.0f / (1 + exp(-value));
+	//return value;
 
 }
 
 inline double isigmoid(const double& value) {
-	//return -log((1.0f / value) - 1);
-	return value;
+	return -log((1.0f / value) - 1);
+	//return value;
 }
 
 typedef unsigned int uint;
@@ -51,9 +52,11 @@ public:
 
 class Net {
 public:
-	const Net* me;
+	static Net* me;
 	std::vector<Layer*> layers;
 	uint size;
+	std::normal_distribution<double> distri;
+	std::mt19937 device;
 
 	Net(uint ls, uint* ns);
 
