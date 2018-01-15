@@ -7,7 +7,6 @@
 inline double sigmoid(const double& value) {
 	return 1.0f / (1 + exp(-value));
 	//return value;
-
 }
 
 inline double isigmoid(const double& value) {
@@ -27,7 +26,7 @@ public:
 	const bool usesig;
 
 	std::vector<Node*> parents;
-	std::vector<double> weights;
+	std::vector<double> weights, dw;
 	uint size;
 	double bias, value, output, target, cost, doutput, doutput2;
 	void Calc();
@@ -57,6 +56,7 @@ public:
 	uint size;
 	std::normal_distribution<double> distri;
 	std::mt19937 device;
+	double cost;
 
 	Net(uint ls, uint* ns);
 

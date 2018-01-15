@@ -36,7 +36,7 @@ void ReadDataFile() {
 		}
 
 		strm >> f;
-		data.second = (log10(f) / 2 - 2) / 2.5;
+		data.second = f / 1000000 / 200;// (log10(f) / 2 - 2) / 2.5;
 		if (strm.eof()) return;
 
 		dataset.push_back(data);
@@ -51,18 +51,16 @@ int main() {
 
 	ReadDataFile();
 
-	uint szs[3] = { 10, 20, 1 };
+	uint szs[3] = { 10, 200, 1 };
 	net = new Net(3, szs);
 
-	for (uint i = 0; i < 200; i++) {
-		for (uint a = 0; a < 50; a++) {
-			net->BP(datasetSz, dataset, 0.05f);
-			//for (uint i = 0; i < 20; i++) {
-			std::cout << i << ": total cost = " << net->layers[2]->nodes[0]->cost << std::endl;
-			//}
-			//std::cout << std::endl;
+	while(1){
+	//for (uint i = 0; i < 2000; i++) {
+		for (uint a = 0; a < 10; a++) {
+			net->BP(datasetSz, dataset, 0.01);
+			//std::cout << net->layers[1]->nodes[0]->doutput << std::endl;
 		}
-		//std::cout << i << ": total cost = " << net->layers[2]->nodes[0]->cost << std::endl;
+		std::cout << ": total cost = " << net->cost << std::endl;
 	}
 
 	net->Save("D:\\comsolnet.txt");
